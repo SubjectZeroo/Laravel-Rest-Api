@@ -69,6 +69,7 @@ class EventController extends Controller
     private function transfer($origin, $destination,$amount)
     {
         $accountOrigin = Account::findOrFail($origin);
+
         $accountDestination = Account::firstOrCreate([
             'id' => $destination
         ]);
