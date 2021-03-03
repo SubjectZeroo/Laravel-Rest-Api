@@ -20,6 +20,12 @@ class EventController extends Controller
                 $request->input('origin'),
                 $request->input('amount')
             );
+        } elseif ($request->input('type')=== 'transfer') {
+            return $this->transfer(
+                $request->input('origin'),
+            $request->input('destination'),
+                $request->input('amount')
+            );
         }
     }
 
@@ -58,5 +64,33 @@ class EventController extends Controller
 
 
 
+    }
+
+    private function transfer($origin, $destination,$amount)
+    {
+        $accountOrigin = Account::findOrFail($origin);
+        $accountDestination = Account::firstOrCreate([
+            'id' => $destination
+        ]);
+
+        \DB::transaction(function ()  use($accountOrigin, $accountDestination, $amount){
+
+        $accountOrigin->balance -= $amount;
+        $accountDestination->balance += $amount;
+
+        $accountOrigin->save();
+        $accountDestination->save();
+        });
+
+        return response()->json([
+            'origin' => [
+                'id' => $accountOrigin->id,
+                'balance' => $accountOrigin->balance
+            ],
+            'destination' => [
+                'id' => $accountDestination->id,
+                'balance' => $accountDestination->balance
+            ]
+        ],201);
     }
 }
