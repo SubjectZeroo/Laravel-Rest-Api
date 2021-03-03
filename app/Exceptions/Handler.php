@@ -37,10 +37,25 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
 
-            if($e instanceof ModelNotFoundException) {
-                return response()->json('0',404);
-            }
 
         });
+    }
+
+     /**
+     * Render an exception into an HTTP response.
+     *
+     * @param  Request  $request
+     * @param Throwable $exception
+     * @return Response
+     *
+     * @throws Throwable
+     */
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof ModelNotFoundException) {
+            return response()->json(0, 404);
+        }
+
+        return parent::render($request, $exception);
     }
 }
