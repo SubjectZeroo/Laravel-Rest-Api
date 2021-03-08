@@ -1,8 +1,8 @@
 # Laravel Rest API ejercicio simple
 
-Following we have a sequence of requests that will be used to test the API.
+A continuación, tenemos una secuencia de solicitudes que se utilizarán para probar la API.
 
-## Reset estado despues de empezar los tests
+## Resetear estado despues de empezar los tests
 
 ```
 POST /reset
@@ -11,7 +11,7 @@ POST /reset
 ```
 
 
-## Get balance para cuentas no existentes
+## Obtener balance para cuenta no existente
 
 ```
 GET /balance?account_id=1234
@@ -27,7 +27,7 @@ POST /event {"type":"deposit", "destination":"100", "amount":10}
 201 {"destination": {"id":"100", "balance":10}}
 ```
 
-## Deposito en una cuenta existentes
+## Deposito en una cuenta existente
 
 ```
 POST /event {"type":"deposit", "destination":"100", "amount":10}
@@ -35,7 +35,7 @@ POST /event {"type":"deposit", "destination":"100", "amount":10}
 201 {"destination": {"id":"100", "balance":20}}
 ```
 
-## Obtener balance para una cuenta existente
+## Obtener balance de una cuenta existente
 
 ```
 GET /balance?account_id=100
